@@ -1,0 +1,25 @@
+version: "3.0"
+services:
+  mysql:
+    image: docker.io/mysql:8.0
+    ports:
+      - "3500:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_DATABASE=rais
+  laravel:
+    image: docker.io/bitnami/laravel:10
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=user
+      - DB_PASSWORD=pass
+      - DB_DATABASE=rais
+    volumes:
+      - "./my-project:/app"
+    depends_on:
+      - mysql
