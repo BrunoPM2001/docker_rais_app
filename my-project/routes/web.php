@@ -26,7 +26,7 @@ Route::post('/login', [Sys_usuarioController::class, 'login'])->name('login.post
 Route::prefix('admin')->middleware('checkRole:admin')->group(function() {
 
   Route::get('/main', function() {
-    return "Dashboard principal";
+    return view('admin.main');
   })->name('admin.main');
 
   Route::get('/estudios', function() {
