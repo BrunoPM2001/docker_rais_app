@@ -18,16 +18,16 @@ Route::get('/', function() {
   return view('welcome');
 });
 
-//  Login
-Route::get('/login', [Sys_usuarioController::class, 'viewLogin'])->name('login.view');
+//  Login - TODO * VER LA MANERA EN LA QUE ALGÚN MIDDLEWARE PERMITA LA REDIRECCIÓN POR SESIONES O IMPLEMENTAR UNO
+Route::view('login', 'login.main')->middleware('checkLoginAndRole')->name('login');
 Route::post('/login', [Sys_usuarioController::class, 'login'])->name('login.post');
 
 //  Administrador
-Route::prefix('admin')->group(function() {
+Route::prefix('admin')->middleware('checkRole:admin')->group(function() {
 
   Route::get('/main', function() {
     return "Dashboard principal";
-  });
+  })->name('admin.main');
 
   Route::get('/estudios', function() {
     return "Estudios";
@@ -56,11 +56,11 @@ Route::prefix('admin')->group(function() {
 });
 
 //  Docente investigador
-Route::prefix('investigador')->group(function() {
+Route::prefix('investigador')->middleware('checkRole:investigador')->group(function() {
 
   Route::get('/main', function() {
     return "Dashboard";
-  });
+  })->name('invest.main');
 
   Route::get('/actividades', function() {
     return "Actividades del investigador";

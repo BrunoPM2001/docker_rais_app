@@ -6,22 +6,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Sys_usuarioController extends Controller {
-
-  public function viewLogin() {
-    return view("login.admin");
-  }
   
   //  Login general
   public function login(Request $request) {
-    //  Credenciales para el login
+
+    //  Credenciales del login
     $credenciales = [
       'username' => $request->user,
       'password' => $request->pass
     ];
-    //  Ejecutar el intento de login
+
     if (Auth::attempt($credenciales)) {
-      return "Success";
+      request()->session()->regenerate();
+
+      //  Tipo de usuario
+      $rol_id = Auth::user()->rol_id;
+
+      //  Redirección según el tipo de usuario
+      switch ($rol_id) {
+        case 1:
+          return redirect()->route('admin.main');
+        case 2:
+          return redirect()->route('invest.main');
+      }
     }
     return "Fail :(";
   }
+  
 }
