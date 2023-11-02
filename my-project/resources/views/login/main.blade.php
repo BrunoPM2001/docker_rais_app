@@ -1,7 +1,9 @@
 @extends('layouts.header')
-
 @section('titulo', 'Rais - Login')
-
+<!--  Extra headers -->
+@section('extra-headers')
+  @vite('resources/css/app.css')
+@endsection
 @section('cuerpo')
   <p>Login para administradores:</p>
   <form action="{{route('login.post')}}" method="POST">
