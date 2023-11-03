@@ -84,7 +84,7 @@
           @foreach ($items as $item)
             <li class="relative">
               <button href="" class="flex p-2 text-white">{{ $item['nombre'] }}</button>
-              <div class="sublist right-0 p-2 bg-white rounded-md shadow md:absolute">
+              <div class="sublist right-0 p-2 bg-white rounded-md shadow md:absolute hidden">
                 @if(isset($item['lista']) && count($item['lista']) > 0)
                   <ul class="space-y-2 md:w-48">
                     @foreach ($item['lista'] as $subitem)
